@@ -102,17 +102,17 @@
 			expect($location.url()).toBe('/');
 		});
 
-		it('$scope.signup() should fail to register with duplicate Username', function() {
+		it('$scope.signup() should fail to register with duplicate email', function() {
 			// Test expected POST request
 			$httpBackend.when('POST', '/api/auth/signup').respond(400, {
-				'message': 'Username already exists'
+				'message': 'Email already exists'
 			});
 
 			scope.signup();
 			$httpBackend.flush();
 
 			// Test scope value
-			expect(scope.error).toBe('Username already exists');
+			expect(scope.error).toBe('Email already exists');
 		});
 	});
 }());

@@ -28,7 +28,7 @@ describe('Article CRUD tests', function() {
 	beforeEach(function(done) {
 		// Create user credentials
 		credentials = {
-			username: 'username',
+			email: 'email',
 			password: 'password'
 		};
 
@@ -37,8 +37,7 @@ describe('Article CRUD tests', function() {
 			firstName: 'Full',
 			lastName: 'Name',
 			displayName: 'Full Name',
-			email: 'test@test.com',
-			username: credentials.username,
+			email: credentials.email,
 			password: credentials.password,
 			provider: 'local'
 		});
@@ -247,7 +246,7 @@ describe('Article CRUD tests', function() {
 	});
 
 	it('should not be able to delete an article if not signed in', function(done) {
-		// Set article user 
+		// Set article user
 		article.user = user;
 
 		// Create new article model instance
