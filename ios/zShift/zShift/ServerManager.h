@@ -42,6 +42,8 @@ typedef NS_ENUM(NSInteger, ConnnectionType) {
 @property id <ServerManagerConnectionDelegate> delegate;
 @property NSDictionary * collectedData;
 
++(ServerManager*)getInstance;
+
 -(void)authenticate:(NSString*)username password:(NSString*)password;
 
 -(void)punchIn:(NSDictionary*)employeeData;

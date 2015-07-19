@@ -16,6 +16,17 @@
     
 }
 
+static ServerManager * instance;
+
++(ServerManager*)getInstance
+{
+    if (!instance) {
+        instance  = [[ServerManager alloc]init];
+    }
+    return instance;
+}
+
+
 
 @synthesize delegate        = _delegate;
 @synthesize collectedData   = _collectedData;

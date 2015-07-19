@@ -31,18 +31,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    _serverManager  = [[ServerManager alloc]init];
+    _serverManager  = [ServerManager getInstance];
     shiftList       = [[NSMutableArray alloc]init];
     
     _serverManager.delegate = self;
     
 
-    [_serverManager authenticate:@"gautam@gaut.am" password:@"password"];
+
   
 //    [self startPoseForShift];
     
 //    [self performSelector:@selector(startPoseForShift) withObject:nil afterDelay:5];
 }
+
+
+
+-(IBAction)login:(id)sender
+{
+    [_serverManager authenticate:@"gautam@gaut.am" password:@"password"];
+
+}
+
 
 
 
