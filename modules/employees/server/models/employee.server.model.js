@@ -14,21 +14,35 @@ var EmployeeSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	title: {
-		type: String,
-		default: '',
-		trim: true,
-		required: 'Title cannot be blank'
+	updated: {
+		type: Date
 	},
-	content: {
-		type: String,
-		default: '',
-		trim: true
-	},
+
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}
+	},
+
+	name: {
+		type: String,
+		default: '',
+		trim: true,
+		required: 'Name cannot be blank'
+	},
+	email: {
+		type: String,
+		trim: true,
+		default: '',
+		required: true,
+		match: [/.+\@.+\..+/, 'Please fill a valid email address'],
+		unique: 'Email should be unique'
+	},
+	phone: {
+		type: String,
+		trim: true,
+		default: '',
+		required: true
+	},
 });
 
 mongoose.model('Employee', EmployeeSchema);

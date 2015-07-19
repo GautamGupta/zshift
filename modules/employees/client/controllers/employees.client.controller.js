@@ -6,14 +6,16 @@ angular.module('employees').controller('EmployeesController', ['$scope', '$state
 
 		$scope.create = function() {
 			var employee = new Employees({
-				title: this.title,
-				content: this.content
+				name: this.name,
+				email: this.email,
+				phone: this.phone,
 			});
 			employee.$save(function(response) {
 				$location.path('employees/' + response._id);
 
-				$scope.title = '';
-				$scope.content = '';
+				$scope.name = '';
+				$scope.email = '';
+				$scope.phone = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

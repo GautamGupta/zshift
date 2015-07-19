@@ -4,14 +4,9 @@
 	</div>
 	<div class="list-group">
 		<a data-ng-repeat="employee in employees"  data-ui-sref="employees.view({employeeId: employee._id})" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="employee.created | date:'mediumDate'"></span>
-				by
-				<span data-ng-bind="employee.user.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="employee.title"></h4>
-			<p class="list-group-item-text" data-ng-bind="employee.content"></p>
+			<h4 class="list-group-item-heading" data-ng-bind="employee.name"></h4>
+			<p class="list-group-item-text" data-ng-bind="employee.email"></p>
+			<p class="list-group-item-text" data-ng-bind="employee.phone"></p>
 		</a>
 	</div>
 	<div class="alert alert-warning text-center" data-ng-if="employees.$resolved && !employees.length">

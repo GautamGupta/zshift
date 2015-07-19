@@ -18,7 +18,7 @@ angular.module('employees').run(['Menus',
 
 		// Add the dropdown create item
 		Menus.addSubMenuItem('topbar', 'employees', {
-			title: 'Create Employees',
+			title: 'Add Employees',
 			state: 'employees.create'
 		});
 	}
