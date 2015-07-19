@@ -134,7 +134,10 @@ exports.initiatePayment = function (req, res) {
 							message: errorHandler.getErrorMessage(saveError)
 						});
 					} else {
-						res.redirect(response.preapprovalUrl);
+						var resp = {
+							redirect: response.preapprovalUrl
+						}
+						res.json(resp);
 					}
 				});
 		    }

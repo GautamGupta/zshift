@@ -10,7 +10,7 @@
 
 			<p class="list-group-item-text" data-ng-show="shift.startedTime">Actual start time: <span data-ng-bind="shift.startedTime | date:'MM/dd/yy hh:mm a'"></span></p>
 			<p class="list-group-item-text" data-ng-show="shift.endedTime">Actual end time: <span data-ng-bind="shift.endedTime | date:'MM/dd/yy hh:mm a'"></span></p>
-			<p class="list-group-item-text" data-ng-show="shift.imageURL"><img src="{{shift.imageURL}}" /></p>
+			<p class="list-group-item-text" data-ng-show="shift.imageURL"><img src="/{{shift.imageURL}}" /></p>
 		</a>
 	</div>
 	<div class="alert alert-warning text-center" data-ng-if="shifts.$resolved && !shifts.length">
