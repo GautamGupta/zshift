@@ -49,12 +49,12 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var shift = req.shift;
 
-	shift.employee = req.body.employee;
-	shift.startTime = req.body.startTime;
-	shift.endTime = req.body.endTime;
-	shift.startedAt = req.body.startedAt;
-	shift.endedAt = req.body.endedAt;
-	shift.imageURL = req.body.imageURL;
+	if (req.body.employee) shift.employee = req.body.employee;
+	if (req.body.startTime) shift.startTime = req.body.startTime;
+	if (req.body.endTime) shift.endTime = req.body.endTime;
+	if (req.body.startedAt) shift.startedAt = req.body.startedAt;
+	if (req.body.endedAt) shift.endedAt = req.body.endedAt;
+	if (req.body.imageURL) shift.imageURL = req.body.imageURL;
 
 	shift.save(function(err) {
 		if (err) {
