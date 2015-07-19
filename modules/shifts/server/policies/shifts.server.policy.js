@@ -25,10 +25,10 @@ exports.invokeRolesPolicies = function() {
 		roles: ['user'],
 		allows: [{
 			resources: '/api/shifts',
-			permissions: ['get', 'post']
+			permissions: '*'
 		}, {
 			resources: '/api/shifts/:shiftId',
-			permissions: ['get', 'put']
+			permissions: '*'
 		}]
 	}, {
 		roles: ['guest'],
