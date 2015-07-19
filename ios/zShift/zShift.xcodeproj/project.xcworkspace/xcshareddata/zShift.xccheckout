@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8B311DB4-593D-48C5-B83C-7474C2645B17</string>
+	<key>IDESourceControlProjectName</key>
+	<string>zShift</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>DDE378B7804628128456B8DD258EF62799C6DC50</key>
+		<string>https://github.com/GautamGupta/zshift.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/zShift/zShift.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>DDE378B7804628128456B8DD258EF62799C6DC50</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/GautamGupta/zshift.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>DDE378B7804628128456B8DD258EF62799C6DC50</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DDE378B7804628128456B8DD258EF62799C6DC50</string>
+			<key>IDESourceControlWCCName</key>
+			<string>zShift</string>
+		</dict>
+	</array>
+</dict>
+</plist>
