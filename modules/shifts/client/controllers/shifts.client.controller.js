@@ -59,6 +59,6 @@ angular.module('shifts').controller('ShiftsController', ['$scope', '$stateParams
 
 		$scope.findEmployees = function() {
 			$scope.employees = Employees.query();
-		}
+		};
 	}
 ]);

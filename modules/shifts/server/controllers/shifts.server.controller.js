@@ -75,7 +75,9 @@ exports.delete = function(req, res) {
  * List of Shifts
  */
 exports.list = function(req, res) {
-	Shift.find().sort('-created').populate('user', 'employee').exec(function(err, shifts) {
+	var Employee = mongoose.model('Employee');
+
+	Shift.find().sort('-created').populate('employee').exec(function(err, shifts) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -90,7 +92,7 @@ exports.list = function(req, res) {
  * Shift middleware
  */
 exports.shiftByID = function(req, res, next, id) {
-	Shift.findById(id).populate('user', 'employee').exec(function(err, shift) {
+	Shift.findById(id).populate('employee').exec(function(err, shift) {
 		if (err) return next(err);
 		if (!shift) return next(new Error('Failed to load shift ' + id));
 		req.shift = shift;

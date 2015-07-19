@@ -26,7 +26,7 @@ var ShiftSchema = new Schema({
 	// Manager enters in
 	employee: {
 		type: Schema.ObjectId,
-		ref: 'Employees'
+		ref: 'Employee'
 	},
 	startTime: {
 		type: Date

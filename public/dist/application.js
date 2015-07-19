@@ -47,145 +47,21 @@ angular.element(document).ready(function() {
 'use strict';
 
 // Use Applicaion configuration module to register a new module
-ApplicationConfiguration.registerModule('articles');
-'use strict';
-
-// Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('core');
 'use strict';
 
 // Use Applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('employees');
+
+'use strict';
+
+// Use Applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('shifts');
+
+'use strict';
+
+// Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('users');
-
-'use strict';
-
-// Configuring the Articles module
-angular.module('articles').run(['Menus',
-	function(Menus) {
-		// Add the articles dropdown item
-		Menus.addMenuItem('topbar', {
-			title: 'Articles',
-			state: 'articles',
-			type: 'dropdown'
-		});
-
-		// Add the dropdown list item
-		Menus.addSubMenuItem('topbar', 'articles', {
-			title: 'List Articles',
-			state: 'articles.list'
-		});
-
-		// Add the dropdown create item
-		Menus.addSubMenuItem('topbar', 'articles', {
-			title: 'Create Articles',
-			state: 'articles.create'
-		});
-	}
-]);
-
-'use strict';
-
-// Setting up route
-angular.module('articles').config(['$stateProvider',
-	function($stateProvider) {
-		// Articles state routing
-		$stateProvider.
-		state('articles', {
-			abstract: true,
-			url: '/articles',
-			template: '<ui-view/>'
-		}).
-		state('articles.list', {
-			url: '',
-			templateUrl: 'modules/articles/views/list-articles.client.view.html'
-		}).
-		state('articles.create', {
-			url: '/create',
-			templateUrl: 'modules/articles/views/create-article.client.view.html'
-		}).
-		state('articles.view', {
-			url: '/:articleId',
-			templateUrl: 'modules/articles/views/view-article.client.view.html'
-		}).
-		state('articles.edit', {
-			url: '/:articleId/edit',
-			templateUrl: 'modules/articles/views/edit-article.client.view.html'
-		});
-	}
-]);
-
-'use strict';
-
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
-		$scope.authentication = Authentication;
-
-		$scope.create = function() {
-			var article = new Articles({
-				title: this.title,
-				content: this.content
-			});
-			article.$save(function(response) {
-				$location.path('articles/' + response._id);
-
-				$scope.title = '';
-				$scope.content = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		$scope.remove = function(article) {
-			if (article) {
-				article.$remove();
-
-				for (var i in $scope.articles) {
-					if ($scope.articles[i] === article) {
-						$scope.articles.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.article.$remove(function() {
-					$location.path('articles');
-				});
-			}
-		};
-
-		$scope.update = function() {
-			var article = $scope.article;
-
-			article.$update(function() {
-				$location.path('articles/' + article._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		$scope.find = function() {
-			$scope.articles = Articles.query();
-		};
-
-		$scope.findOne = function() {
-			$scope.article = Articles.get({
-				articleId: $stateParams.articleId
-			});
-		};
-	}
-]);
-'use strict';
-
-//Articles service used for communicating with the articles REST endpoints
-angular.module('articles').factory('Articles', ['$resource',
-	function($resource) {
-		return $resource('api/articles/:articleId', {
-			articleId: '@_id'
-		}, {
-			update: {
-				method: 'PUT'
-			}
-		});
-	}
-]);
 
 'use strict';
 
@@ -456,6 +332,276 @@ angular.module('core').service('Socket', ['Authentication', '$state', '$timeout'
 
 'use strict';
 
+// Configuring the Employees module
+angular.module('employees').run(['Menus',
+	function(Menus) {
+		// Add the employees dropdown item
+		Menus.addMenuItem('topbar', {
+			title: 'Employees',
+			state: 'employees',
+			type: 'dropdown'
+		});
+
+		// Add the dropdown list item
+		Menus.addSubMenuItem('topbar', 'employees', {
+			title: 'List Employees',
+			state: 'employees.list'
+		});
+
+		// Add the dropdown create item
+		Menus.addSubMenuItem('topbar', 'employees', {
+			title: 'Add Employee',
+			state: 'employees.create'
+		});
+	}
+]);
+
+'use strict';
+
+// Setting up route
+angular.module('employees').config(['$stateProvider',
+	function($stateProvider) {
+		// Employees state routing
+		$stateProvider.
+		state('employees', {
+			abstract: true,
+			url: '/employees',
+			template: '<ui-view/>'
+		}).
+		state('employees.list', {
+			url: '',
+			templateUrl: 'modules/employees/views/list-employees.client.view.html'
+		}).
+		state('employees.create', {
+			url: '/create',
+			templateUrl: 'modules/employees/views/create-employee.client.view.html'
+		}).
+		state('employees.view', {
+			url: '/:employeeId',
+			templateUrl: 'modules/employees/views/view-employee.client.view.html'
+		}).
+		state('employees.edit', {
+			url: '/:employeeId/edit',
+			templateUrl: 'modules/employees/views/edit-employee.client.view.html'
+		});
+	}
+]);
+
+'use strict';
+
+angular.module('employees').controller('EmployeesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Employees',
+	function($scope, $stateParams, $location, Authentication, Employees) {
+		$scope.authentication = Authentication;
+
+		$scope.create = function() {
+			var employee = new Employees({
+				name: this.name,
+				email: this.email,
+				phone: this.phone,
+			});
+			employee.$save(function(response) {
+				$location.path('employees/' + response._id);
+
+				$scope.name = '';
+				$scope.email = '';
+				$scope.phone = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.remove = function(employee) {
+			if (employee) {
+				employee.$remove();
+
+				for (var i in $scope.employees) {
+					if ($scope.employees[i] === employee) {
+						$scope.employees.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.employee.$remove(function() {
+					$location.path('employees');
+				});
+			}
+		};
+
+		$scope.update = function() {
+			var employee = $scope.employee;
+
+			employee.$update(function() {
+				$location.path('employees/' + employee._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.find = function() {
+			$scope.employees = Employees.query();
+		};
+
+		$scope.findOne = function() {
+			$scope.employee = Employees.get({
+				employeeId: $stateParams.employeeId
+			});
+		};
+	}
+]);
+
+'use strict';
+
+//Employees service used for communicating with the employees REST endpoints
+angular.module('employees').factory('Employees', ['$resource',
+	function($resource) {
+		return $resource('api/employees/:employeeId', {
+			employeeId: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
+			}
+		});
+	}
+]);
+
+'use strict';
+
+// Configuring the Shifts module
+angular.module('shifts').run(['Menus',
+	function(Menus) {
+		// Add the shifts dropdown item
+		Menus.addMenuItem('topbar', {
+			title: 'Shifts',
+			state: 'shifts',
+			type: 'dropdown'
+		});
+
+		// Add the dropdown list item
+		Menus.addSubMenuItem('topbar', 'shifts', {
+			title: 'List Shifts',
+			state: 'shifts.list'
+		});
+
+		// Add the dropdown create item
+		Menus.addSubMenuItem('topbar', 'shifts', {
+			title: 'Add Shift',
+			state: 'shifts.create'
+		});
+	}
+]);
+
+'use strict';
+
+// Setting up route
+angular.module('shifts').config(['$stateProvider',
+	function($stateProvider) {
+		// Shifts state routing
+		$stateProvider.
+		state('shifts', {
+			abstract: true,
+			url: '/shifts',
+			template: '<ui-view/>'
+		}).
+		state('shifts.list', {
+			url: '',
+			templateUrl: 'modules/shifts/views/list-shifts.client.view.html'
+		}).
+		state('shifts.create', {
+			url: '/create',
+			templateUrl: 'modules/shifts/views/create-shift.client.view.html'
+		}).
+		state('shifts.view', {
+			url: '/:shiftId',
+			templateUrl: 'modules/shifts/views/view-shift.client.view.html'
+		}).
+		state('shifts.edit', {
+			url: '/:shiftId/edit',
+			templateUrl: 'modules/shifts/views/edit-shift.client.view.html'
+		});
+	}
+]);
+
+'use strict';
+
+angular.module('shifts').controller('ShiftsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Shifts', 'Employees',
+	function($scope, $stateParams, $location, Authentication, Shifts, Employees) {
+		$scope.authentication = Authentication;
+
+		$scope.create = function() {
+			var shift = new Shifts({
+				employee: this.employee,
+				startTime: this.startTime,
+				endTime: this.endTime,
+			});
+			shift.$save(function(response) {
+				$location.path('shifts/' + response._id);
+
+				$scope.employee = '';
+				$scope.startTime = '';
+				$scope.endTime = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.remove = function(shift) {
+			if (shift) {
+				shift.$remove();
+
+				for (var i in $scope.shifts) {
+					if ($scope.shifts[i] === shift) {
+						$scope.shifts.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.shift.$remove(function() {
+					$location.path('shifts');
+				});
+			}
+		};
+
+		$scope.update = function() {
+			var shift = $scope.shift;
+
+			shift.$update(function() {
+				$location.path('shifts/' + shift._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.find = function() {
+			$scope.shifts = Shifts.query();
+		};
+
+		$scope.findOne = function() {
+			$scope.shift = Shifts.get({
+				shiftId: $stateParams.shiftId
+			});
+		};
+
+		$scope.findEmployees = function() {
+			$scope.employees = Employees.query();
+		};
+	}
+]);
+
+'use strict';
+
+//Shifts service used for communicating with the shifts REST endpoints
+angular.module('shifts').factory('Shifts', ['$resource',
+	function($resource) {
+		return $resource('api/shifts/:shiftId', {
+			shiftId: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
+			}
+		});
+	}
+]);
+
+'use strict';
+
 // Config HTTP Error Handling
 angular.module('users').config(['$httpProvider',
 	function ($httpProvider) {
@@ -504,10 +650,6 @@ angular.module('users').config(['$stateProvider',
 			state('settings.password', {
 				url: '/password',
 				templateUrl: 'modules/users/views/settings/change-password.client.view.html'
-			}).
-			state('settings.accounts', {
-				url: '/accounts',
-				templateUrl: 'modules/users/views/settings/manage-social-accounts.client.view.html'
 			}).
 			state('settings.picture', {
 				url: '/picture',
@@ -642,43 +784,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
 
-		// Check if there are additional accounts 
-		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
-			for (var i in $scope.user.additionalProvidersData) {
-				return true;
-			}
-
-			return false;
-		};
-
-		// Check if provider is already in use with current user
-		$scope.isConnectedSocialAccount = function(provider) {
-			return $scope.user.provider === provider || ($scope.user.additionalProvidersData && $scope.user.additionalProvidersData[provider]);
-		};
-
-		// Remove a user social account
-		$scope.removeUserSocialAccount = function(provider) {
-			$scope.success = $scope.error = null;
-
-			$http.delete('/api/users/accounts', {
-				params: {
-					provider: provider
-				}
-			}).success(function(response) {
-				// If successful show success message and clear form
-				$scope.success = true;
-				$scope.user = Authentication.user = response;
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
-		};
-
 		// Update a user profile
 		$scope.updateUserProfile = function(isValid) {
 			if (isValid){
 				$scope.success = $scope.error = null;
 				var user = new Users($scope.user);
-	
+
 				user.$update(function(response) {
 					$scope.success = true;
 					Authentication.user = response;
@@ -820,45 +931,6 @@ angular.module('users').controller('EditProfileController', ['$scope', '$http', 
 			} else {
 				$scope.submitted = true;
 			}
-		};
-	}
-]);
-
-'use strict';
-
-angular.module('users').controller('SocialAccountsController', ['$scope', '$http', '$location', 'Users', 'Authentication',
-	function($scope, $http, $location, Users, Authentication) {
-		$scope.user = Authentication.user;
-
-		// Check if there are additional accounts
-		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
-			for (var i in $scope.user.additionalProvidersData) {
-				return true;
-			}
-
-			return false;
-		};
-
-		// Check if provider is already in use with current user
-		$scope.isConnectedSocialAccount = function(provider) {
-			return $scope.user.provider === provider || ($scope.user.additionalProvidersData && $scope.user.additionalProvidersData[provider]);
-		};
-
-		// Remove a user social account
-		$scope.removeUserSocialAccount = function(provider) {
-			$scope.success = $scope.error = null;
-
-			$http.delete('/api/users/accounts', {
-				params: {
-					provider: provider
-				}
-			}).success(function(response) {
-				// If successful show success message and clear form
-				$scope.success = true;
-				$scope.user = Authentication.user = response;
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
 		};
 	}
 ]);
