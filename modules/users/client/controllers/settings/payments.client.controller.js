@@ -5,7 +5,6 @@ angular.module('users').controller('PaymentsController', ['$scope', '$timeout', 
         // Change user profile picture
         $scope.initiatePayment = function () {
             $http.post('/api/users/initiatePayment').success(function(response) {
-                // console.log(response);
                 $window.location.href = response.redirect;
             }).error(function(response) {
                 $scope.error = response.message;

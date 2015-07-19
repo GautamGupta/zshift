@@ -51,6 +51,11 @@ angular.module('shifts').controller('ShiftsController', ['$scope', '$stateParams
 			$scope.shifts = Shifts.query();
 		};
 
+		$scope.fill = function() {
+			$scope.startTime = "2015-07-20T09:00";
+			$scope.endTime = "2015-07-20T10:00";
+		}
+
 		$scope.findOne = function() {
 			$scope.shift = Shifts.get({
 				shiftId: $stateParams.shiftId

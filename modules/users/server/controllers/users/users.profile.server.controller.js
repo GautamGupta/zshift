@@ -109,7 +109,7 @@ exports.initiatePayment = function (req, res) {
 		    currencyCode:                   'USD',
 		    startingDate:                   new Date().toISOString(),
 		    endingDate:                     new Date('2016-01-01').toISOString(),
-		    returnUrl:                      'http://zshift.herokuapp.com/settings/payments/return',
+		    returnUrl:                      'http://zshift.herokuapp.com/employees',
 		    cancelUrl:                      'http://zshift.herokuapp.com/settings/payments/',
 		    maxTotalAmountOfAllPayments:    '1500.00',
 		    requestEnvelope: {
