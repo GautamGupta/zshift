@@ -4,13 +4,13 @@
 	</div>
 	<div class="list-group">
 		<a data-ng-repeat="shift in shifts"  data-ui-sref="shifts.view({shiftId: shift._id})" class="list-group-item">
-			<h4 class="list-group-item-heading" data-ng-bind="shift.employee.name"></h4>
-			<p class="list-group-item-text">From <span data-ng-bind="shift.startTime | date:'MM/dd/yy hh:mm a'"></span>
-			 to <span class="list-group-item-text" data-ng-bind="shift.endTime | date:'MM/dd/yy hh:mm a'"></span></p>
+			<h4 class="list-group-item-heading">For <span data-ng-bind="shift.employee.name"></span></h4>
+			<p class="list-group-item-text">From <span data-ng-bind="shift.startTime | date:'EEE, dd MMM h:mm a'"></span>
+			 to <span class="list-group-item-text" data-ng-bind="shift.endTime | date:'h:mm a'"></span></p>
 
-			<p class="list-group-item-text" data-ng-show="shift.startedTime">Actual start time: <span data-ng-bind="shift.startedTime | date:'MM/dd/yy hh:mm a'"></span></p>
-			<p class="list-group-item-text" data-ng-show="shift.endedTime">Actual end time: <span data-ng-bind="shift.endedTime | date:'MM/dd/yy hh:mm a'"></span></p>
-			<p class="list-group-item-text" data-ng-show="shift.imageURL"><img src="/{{shift.imageURL}}" /></p>
+			<p class="list-group-item-text" data-ng-hide="!shift.startedTime">Actual start time: <span data-ng-bind="shift.startedTime | date:'EEE, dd MMM h:mm a'"></span></p>
+			<p class="list-group-item-text" data-ng-hide="!shift.endedTime">Actual end time: <span data-ng-bind="shift.endedTime | date:'h:mm a'"></span></p>
+			<p class="list-group-item-text" data-ng-hide="!shift.imageURL"><img src="/{{shift.imageURL}}" /></p>
 		</a>
 	</div>
 	<div class="alert alert-warning text-center" data-ng-if="shifts.$resolved && !shifts.length">

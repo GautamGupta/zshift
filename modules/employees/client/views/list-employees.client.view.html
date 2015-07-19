@@ -3,7 +3,7 @@
 		<h1>Employees</h1>
 	</div>
 	<div class="list-group">
-		<a data-ng-repeat="employee in employees"  data-ui-sref="employees.view({employeeId: employee._id})" class="list-group-item">
+		<a data-ng-repeat="employee in employees"  data-ui-sref="shifts.create()" class="list-group-item">
 			<h4 class="list-group-item-heading" data-ng-bind="employee.name"></h4>
 			<p class="list-group-item-text" data-ng-bind="employee.email"></p>
 			<p class="list-group-item-text" data-ng-bind="employee.phone"></p>

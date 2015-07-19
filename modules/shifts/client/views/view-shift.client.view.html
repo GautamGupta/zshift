@@ -1,6 +1,6 @@
 <section data-ng-controller="ShiftsController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1 data-ng-bind="shift.name"></h1>
+		<h1>For <span data-ng-bind="shift.employee.name"></span></h1>
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == shift.user._id">
 		<a class="btn btn-primary" data-ui-sref="shifts.edit({shiftId: shift._id})">
@@ -10,6 +10,11 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
-	<p class="list-group-item-text" data-ng-bind="shift.email"></p>
-	<p class="list-group-item-text" data-ng-bind="shift.phone"></p>
+
+	<p class="list-group-item-text">Shift starts at <span data-ng-bind="shift.startTime | date:'EEE, dd MMM h:mm a'"></span>
+	 and ends at <span class="list-group-item-text" data-ng-bind="shift.endTime | date:'h:mm a'"></span></p>
+
+	<p class="list-group-item-text" data-ng-hide="!shift.startedTime">Actual start time: <span data-ng-bind="shift.startedTime | date:'EEE, dd MMM h:mm a'"></span></p>
+	<p class="list-group-item-text" data-ng-hide="!shift.endedTime">Actual end time: <span data-ng-bind="shift.endedTime | date:'h:mm a'"></span></p>
+	<p class="list-group-item-text" data-ng-hide="!shift.imageURL"><img src="/{{shift.imageURL}}" /></p>
 </section>
