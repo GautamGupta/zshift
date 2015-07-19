@@ -40,8 +40,12 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var shift = req.shift;
 
-	shift.title = req.body.title;
-	shift.content = req.body.content;
+	shift.employee = req.body.employee;
+	shift.startTime = req.body.startTime;
+	shift.endTime = req.body.endTime;
+	shift.startedAt = req.body.startedAt;
+	shift.endedAt = req.body.endedAt;
+	shift.imageURL = req.body.imageURL;
 
 	shift.save(function(err) {
 		if (err) {
