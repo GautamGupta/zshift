@@ -1,0 +1,15 @@
+<section data-ng-controller="ShiftsController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1 data-ng-bind="shift.name"></h1>
+	</div>
+	<div class="pull-right" data-ng-show="authentication.user._id == shift.user._id">
+		<a class="btn btn-primary" data-ui-sref="shifts.edit({shiftId: shift._id})">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	<p class="list-group-item-text" data-ng-bind="shift.email"></p>
+	<p class="list-group-item-text" data-ng-bind="shift.phone"></p>
+</section>

@@ -1,0 +1,38 @@
+<section data-ng-controller="ShiftsController" data-ng-init="findEmployees();">
+	<div class="page-header">
+		<h1>New Shift</h1>
+	</div>
+	<div class="col-md-12">
+		<form name="shiftForm" class="form-horizontal" data-ng-submit="create()" novalidate>
+			<fieldset>
+				<div class="form-group">
+                    <label class="col-sm-2 control-label" for="employee">Employee</label>
+                    <div class="col-sm-3 controls">
+                        <select id="employee" class="form-control" ng-model="employee">
+                            <option ng-repeat="employee in employees" value="{{employee._id}}">{{employee.name}}</option>
+                        </select>
+                    </div>
+                </div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="startTime">Start Time</label>
+					<div class="col-sm-3 controls">
+						<input name="startTime" type="datetime-local" data-ng-model="startTime" id="startTime" class="form-control" placeholder="Start Time" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="endTime">End Time</label>
+					<div class="col-sm-3 controls">
+						<input name="endTime" type="datetime-local" data-ng-model="endTime" id="endTime" class="form-control" placeholder="End Time" required>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<input type="submit" class="btn btn-default">
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>
