@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: process.env.PROD_MONGODB,
+	db: 'mongodb://localhost/zshift',
 	app: {
 		title: 'zShift - Development Environment'
 	},

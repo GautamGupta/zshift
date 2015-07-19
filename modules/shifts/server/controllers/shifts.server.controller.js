@@ -47,25 +47,37 @@ exports.update = function(req, res) {
 	if (req.body.startedAt) shift.startedAt = req.body.startedAt;
 	if (req.body.endedAt) shift.endedAt = req.body.endedAt;
 
-	fs.writeFile('./modules/shifts/client/img/logs/uploads/' + req.files.image.name, req.files.image.buffer, function (uploadError) {
-		if (req.files && uploadError) {
-			return res.status(400).send({
-				message: 'Error occurred while uploading profile picture'
-			});
-		} else {
-			shift.imageURL = 'modules/shifts/img/logs/uploads/' + req.files.image.name;
+	if (req.files) {
+		fs.writeFile('./modules/shifts/client/img/logs/uploads/' + req.files.image.name, req.files.image.buffer, function (uploadError) {
+			if (uploadError) {
+				return res.status(400).send({
+					message: 'Error occurred while uploading profile picture'
+				});
+			} else {
+				shift.imageURL = 'modules/shifts/img/logs/uploads/' + req.files.image.name;
 
-			shift.save(function(err) {
-				if (err) {
-					return res.status(400).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				} else {
-					res.json(shift);
-				}
-			});
-		}
-	});
+				shift.save(function(err) {
+					if (err) {
+						return res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						res.json(shift);
+					}
+				});
+			}
+		});
+	} else {
+		shift.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				res.json(shift);
+			}
+		});
+	}
 };
 
 /**
