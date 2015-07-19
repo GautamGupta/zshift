@@ -4,19 +4,11 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
+	fs = require('fs'),
 	path = require('path'),
 	mongoose = require('mongoose'),
 	Shift = mongoose.model('Shift'),
-	errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
-	config = require(path.resolve('./config/config')),
-	braintree = require('braintree');
-
-var braintree_gateway = braintree.connect({
-	environment: braintree.Environment.Sandbox,
-	publicKey: config.integrations.braintree.public_id,
-	privateKey: config.integrations.braintree.private_id,
-	merchantId: config.integrations.braintree.merchant_id,
-});
+	errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
  * Create a shift
@@ -54,15 +46,24 @@ exports.update = function(req, res) {
 	if (req.body.endTime) shift.endTime = req.body.endTime;
 	if (req.body.startedAt) shift.startedAt = req.body.startedAt;
 	if (req.body.endedAt) shift.endedAt = req.body.endedAt;
-	if (req.body.imageURL) shift.imageURL = req.body.imageURL;
 
-	shift.save(function(err) {
-		if (err) {
+	fs.writeFile('./modules/shifts/client/img/logs/uploads/' + req.files.image.name, req.files.image.buffer, function (uploadError) {
+		if (req.files && uploadError) {
 			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+				message: 'Error occurred while uploading profile picture'
 			});
 		} else {
-			res.json(shift);
+			shift.imageURL = 'modules/shifts/img/logs/uploads/' + req.files.image.name;
+
+			shift.save(function(err) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.json(shift);
+				}
+			});
 		}
 	});
 };
