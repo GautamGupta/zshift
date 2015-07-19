@@ -11,7 +11,8 @@ module.exports = function(app) {
 
 	// Setting up the users profile api
 	app.route('/api/users/me').get(users.me);
-	app.route('/api/users').put(users.update);
+    app.route('/api/users').put(users.update);
+    app.route('/api/users/initiatePayment').put(users.initiatePayment);
 
 	// Finish by binding the user middleware
 	app.param('userId', users.userByID);

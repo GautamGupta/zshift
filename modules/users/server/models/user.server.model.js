@@ -67,6 +67,9 @@ var UserSchema = new Schema({
 		type: String,
 		default: 'modules/users/img/profile/default.png'
 	},
+	paypalPreapprovalKey: {
+		type: String
+	},
 	roles: {
 		type: [{
 			type: String,

@@ -9,7 +9,16 @@ var _ = require('lodash'),
 	errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	config = require(path.resolve('./config/config')),
+	Paypal = require('paypal-adaptive');
+
+var paypalSdk = new Paypal({
+    userId:    'gautam+zs-facilitator_api1.gaut.am',
+    password:  'WP4HCRXBEKP4FJ9P',
+    signature: 'Ajql5sQinR2Fr0rVHuyIo6TzW94xA7FU7UiCcHaTfL6y99128IhyD89A',
+    sandbox:   true // defaults to false
+});
 
 /**
  * Update user details
@@ -81,6 +90,54 @@ exports.changeProfilePicture = function (req, res) {
 					}
 				});
 			}
+		});
+	} else {
+		res.status(400).send({
+			message: 'User is not signed in'
+		});
+	}
+};
+
+/**
+ * Redirect to Paypal
+ */
+exports.initiatePayment = function (req, res) {
+	var user = req.user;
+
+	if (user) {
+		var payload = {
+		    currencyCode:                   'USD',
+		    startingDate:                   new Date().toISOString(),
+		    endingDate:                     new Date('2016-01-01').toISOString(),
+		    returnUrl:                      'http://zshift.herokuapp.com/settings/payments/return',
+		    cancelUrl:                      'http://zshift.herokuapp.com/settings/payments/',
+		    maxTotalAmountOfAllPayments:    '1500.00',
+		    requestEnvelope: {
+		        errorLanguage:  'en_US'
+		    }
+		};
+
+		paypalSdk.preapproval(payload, function (err, response) {
+		    if (err) {
+		        console.log(err);
+		    } else {
+		        // Response will have the original Paypal API response
+		        console.log(response);
+		        // But also a preapprovalUrl, so you can redirect the sender to approve the payment easily
+		        console.log('Redirect to %s', response.preapprovalUrl);
+
+		        user.paypalPreapprovalKey = res.preapprovalKey;
+
+		        user.save(function (saveError) {
+					if (saveError) {
+						return res.status(400).send({
+							message: errorHandler.getErrorMessage(saveError)
+						});
+					} else {
+						res.redirect(response.preapprovalUrl);
+					}
+				});
+		    }
 		});
 	} else {
 		res.status(400).send({
