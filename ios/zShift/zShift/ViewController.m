@@ -132,11 +132,43 @@
     for (NSDictionary * dict in list) {
 
         Shift * shift = [[Shift alloc]initWithDict:dict];
+        
+         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss.sss'Z'"];
+        [dateFormat setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+        
+        
+//        NSString * alsdkfjasdf=        [dateFormat stringFromDate:[NSDate date]];
+        
+//        NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
+//                                                              dateStyle:NSDateFormatterShortStyle
+//                                                              timeStyle:NSDateFormatterShortStyle];
+//        NSLog(@"%@",dateString);
+        
+//        shift.actualStartTime = [dateFormat stringFromDate:[NSDate date]];
+        shift.actualEndTime = [dateFormat stringFromDate:[NSDate date]];
         [shiftList addObject:shift];
     }
     
     
+    
+    
+    
     // reload table
+    
+    
+    // punch IN!!
+    
+    Shift * sss = (Shift*) [shiftList firstObject];
+    
+    NSLog(@"%d",sss.status);
+//    [self.serverManager punchIn:@{
+//                                  @"_id":sss.shiftID,
+//                                  @"startedAt":sss.actualStartTime}];
+    
+    [self.serverManager punchOut:@{
+                                  @"_id":sss.shiftID,
+                                  @"endedAt":sss.actualEndTime}];
     
 }
 

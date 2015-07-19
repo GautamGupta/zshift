@@ -40,5 +40,13 @@
     return @{};
 }
 
+// for debugging
+-(NSString*)description
+{
+    
+    
+    return [NSString stringWithFormat:@"Shifter Name: %@  sStartTime: %@ sEndTime: %@  StartTime: %@ EndTime: %@  Status:%d",self.name,self.startTime,self.endTime,self.actualStartTime,self.actualEndTime,self.status];
+}
+
 
 @end

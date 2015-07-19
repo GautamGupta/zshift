@@ -10,11 +10,11 @@
 
 
 typedef NS_ENUM(NSInteger, ConnnectionType) {
-    ConnnectionTypeAuthentication,
-    ConnnectionTypeUpdate,
-    ConnnectionTypePunchIn,
-    ConnnectionTypePunchOut,
-    ConnnectionTypeGetAllShifts
+    ConnnectionTypeAuthentication   = 0,
+    ConnnectionTypeUpdate           = 1,
+    ConnnectionTypePunchIn          = 2,
+    ConnnectionTypePunchOut         = 3,
+    ConnnectionTypeGetAllShifts     = 4
 };
 
 

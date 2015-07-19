@@ -74,44 +74,61 @@
 {
     
     
-    UIImage * image     = [employeeData objectForKey:@"image"];
-    NSData  * imageData = [self imageToData:image];
-    // post with acctual start time
+    NSDictionary        * postData      = @{@"startedAt":employeeData[@"startedAt"]};
+    NSString            * stringURL     = [NSString stringWithFormat:@"http://zshift.herokuapp.com/api/shifts/%@",employeeData[@"_id"]];
+    NSURL               * url           = [NSURL URLWithString:stringURL];
+    NSMutableURLRequest * request       = [[NSMutableURLRequest alloc] initWithURL:url];
+    NSError             * error         = nil;
+    NSData              * requestData   =  [NSJSONSerialization dataWithJSONObject:postData options:0 error:&error];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setHTTPMethod:@"PUT"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%d", [requestData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:requestData];
     
-    self.connectionType          = ConnnectionTypePunchIn;
-    //[NSDate date]
-    NSURLRequest    * url   = [NSURLRequest requestWithURL:[NSURL URLWithString:@""]];
-    NSURLConnection * c     = [[NSURLConnection alloc]initWithRequest:url delegate:self];
+    NSURLConnection * c     = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    self.connectionType     = ConnnectionTypePunchIn;
+    [c start];
+    
+    if (_delegate){
+        [_delegate onConnectionStart:self];
+    }
     if(c) {
         NSLog(@"Connection Successful");
     } else {
         NSLog(@"Connection could not be made");
     }
-    
-    [c start];
-    
-    if (_delegate){
-        [_delegate onConnectionStart:self];
-    }
+
 }
 
 
 -(void)punchOut:(NSDictionary*)employeeData
 {
-    // set status to out and update the server
-    // post with acctual outtime
+    NSDictionary        * postData      = @{@"endedAt":employeeData[@"endedAt"]};
+    NSString            * stringURL     = [NSString stringWithFormat:@"http://zshift.herokuapp.com/api/shifts/%@",employeeData[@"_id"]];
+    NSURL               * url           = [NSURL URLWithString:stringURL];
+    NSMutableURLRequest * request       = [[NSMutableURLRequest alloc] initWithURL:url];
+    NSError             * error         = nil;
+    NSData              * requestData   =  [NSJSONSerialization dataWithJSONObject:postData options:0 error:&error];
     
-    //[NSDate date]
-    NSURLRequest    * url   = [NSURLRequest requestWithURL:[NSURL URLWithString:@""]];
-    NSURLConnection * c     = [[NSURLConnection alloc]initWithRequest:url delegate:self];
+    [request setHTTPMethod:@"PUT"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%d", [requestData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:requestData];
     
-    self.connectionType          = ConnnectionTypePunchOut;
+    NSURLConnection * c     = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    self.connectionType     = ConnnectionTypePunchOut;
     [c start];
     
     if (_delegate){
         [_delegate onConnectionStart:self];
+    }
+    if(c) {
+        NSLog(@"Connection Successful");
+    } else {
+        NSLog(@"Connection could not be made");
     }
 }
 
