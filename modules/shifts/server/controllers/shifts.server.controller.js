@@ -23,6 +23,48 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			var Employee = mongoose.model('Employee');
+
+			var employee = Employee.findById(shift.employee);
+			Employee.findById(shift.employee).exec(function(err, employee) {
+				console.log(employee);
+
+				if (employee && employee.phone) {
+					// Load the twilio module
+					var twilio = require('twilio');
+
+					// Create a new REST API client to make authenticated requests against the
+					// twilio back end
+					var client = new twilio.RestClient('ACcdfbee31a29f6e78c9eeee13256b00ea', '9aa818daf8f733acec34bb6517fe058b');
+
+					// Pass in parameters to the REST API using an object literal notation. The
+					// REST client will handle authentication and response serialzation for you.
+					client.sms.messages.create({
+					    to: employee.phone,
+					    from:'+16475591742',
+					    body: 'You have a new shift from ' + shift.startTime + ' to ' + shift.endTime + '.'
+					}, function(error, message) {
+					    // The HTTP request to Twilio will run asynchronously. This callback
+					    // function will be called when a response is received from Twilio
+					    // The "error" variable will contain error information, if any.
+					    // If the request was successful, this value will be "falsy"
+					    if (!error) {
+					        // The second argument to the callback will contain the information
+					        // sent back by Twilio for the request. In this case, it is the
+					        // information about the text messsage you just sent:
+					        console.log('Success! The SID for this SMS message is:');
+					        console.log(message.sid);
+
+					        console.log('Message sent on:');
+					        console.log(message.dateCreated);
+					    } else {
+					        console.log('Oops! There was a Twilio error. ' + err);
+					    }
+					});
+				}
+			});
+
+
 			res.json(shift);
 		}
 	});
