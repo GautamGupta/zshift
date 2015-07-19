@@ -40,8 +40,10 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var employee = req.employee;
 
-	employee.title = req.body.title;
-	employee.content = req.body.content;
+	employee.name = req.body.name;
+	employee.email = req.body.email;
+	employee.phone = req.body.phone;
+	employee.wage = req.body.wage;
 
 	employee.save(function(err) {
 		if (err) {

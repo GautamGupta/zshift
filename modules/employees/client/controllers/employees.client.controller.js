@@ -9,6 +9,7 @@ angular.module('employees').controller('EmployeesController', ['$scope', '$state
 				name: this.name,
 				email: this.email,
 				phone: this.phone,
+				wage: this.wage,
 			});
 			employee.$save(function(response) {
 				$location.path('employees/' + response._id);
@@ -16,6 +17,7 @@ angular.module('employees').controller('EmployeesController', ['$scope', '$state
 				$scope.name = '';
 				$scope.email = '';
 				$scope.phone = '';
+				$scope.wage = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

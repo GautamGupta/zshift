@@ -24,6 +24,12 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="control-label" for="wage">Wage/hr (USD)</label>
+					<div class="controls">
+						<input name="wage" type="wage" data-ng-model="employee.wage" id="wage" class="form-control" placeholder="Wage" required>
+					</div>
+				</div>
+				<div class="form-group">
 					<input type="submit" value="Update" class="btn btn-default">
 				</div>
 				<div data-ng-show="error" class="text-danger">

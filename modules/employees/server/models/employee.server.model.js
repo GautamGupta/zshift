@@ -43,6 +43,10 @@ var EmployeeSchema = new Schema({
 		default: '',
 		required: true
 	},
+	wage: {
+		type: Number,
+		default: 0
+	},
 });
 
 mongoose.model('Employee', EmployeeSchema);

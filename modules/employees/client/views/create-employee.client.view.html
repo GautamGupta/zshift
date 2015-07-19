@@ -6,21 +6,27 @@
 		<form name="employeeForm" class="form-horizontal" data-ng-submit="create()" novalidate>
 			<fieldset>
 				<div class="form-group">
-					<label class="control-label" for="title">Name</label>
+					<label class="control-label" for="name">Name</label>
 					<div class="controls">
 						<input name="name" type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="title">Phone</label>
+					<label class="control-label" for="phone">Phone</label>
 					<div class="controls">
 						<input name="phone" type="phone" data-ng-model="phone" id="phone" class="form-control" placeholder="Phone" required>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="title">Email</label>
+					<label class="control-label" for="email">Email</label>
 					<div class="controls">
 						<input name="email" type="email" data-ng-model="email" id="email" class="form-control" placeholder="Email" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="wage">Wage/hr (USD)</label>
+					<div class="controls">
+						<input name="wage" type="wage" data-ng-model="wage" id="wage" class="form-control" placeholder="Wage" required>
 					</div>
 				</div>
 				<div class="form-group">

@@ -7,7 +7,16 @@ var _ = require('lodash'),
 	path = require('path'),
 	mongoose = require('mongoose'),
 	Shift = mongoose.model('Shift'),
-	errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+	errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+	config = require(path.resolve('./config/config')),
+	braintree = require('braintree');
+
+var braintree_gateway = braintree.connect({
+	environment: braintree.Environment.Sandbox,
+	publicKey: config.integrations.braintree.public_id,
+	privateKey: config.integrations.braintree.private_id,
+	merchantId: config.integrations.braintree.merchant_id,
+});
 
 /**
  * Create a shift
