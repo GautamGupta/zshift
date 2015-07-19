@@ -7,7 +7,16 @@ var _ = require('lodash'),
 	path = require('path'),
 	mongoose = require('mongoose'),
 	Shift = mongoose.model('Shift'),
-	errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+	errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+	config = require(path.resolve('./config/config')),
+	braintree = require('braintree');
+
+var braintree_gateway = braintree.connect({
+	environment: braintree.Environment.Sandbox,
+	publicKey: config.integrations.braintree.public_id,
+	privateKey: config.integrations.braintree.private_id,
+	merchantId: config.integrations.braintree.merchant_id,
+});
 
 /**
  * Create a shift
@@ -40,8 +49,12 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var shift = req.shift;
 
-	shift.title = req.body.title;
-	shift.content = req.body.content;
+	if (req.body.employee) shift.employee = req.body.employee;
+	if (req.body.startTime) shift.startTime = req.body.startTime;
+	if (req.body.endTime) shift.endTime = req.body.endTime;
+	if (req.body.startedAt) shift.startedAt = req.body.startedAt;
+	if (req.body.endedAt) shift.endedAt = req.body.endedAt;
+	if (req.body.imageURL) shift.imageURL = req.body.imageURL;
 
 	shift.save(function(err) {
 		if (err) {

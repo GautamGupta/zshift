@@ -7,6 +7,7 @@
 			<h4 class="list-group-item-heading" data-ng-bind="employee.name"></h4>
 			<p class="list-group-item-text" data-ng-bind="employee.email"></p>
 			<p class="list-group-item-text" data-ng-bind="employee.phone"></p>
+			<p class="list-group-item-text">$<span data-ng-bind="employee.wage"></span>/hr</p>
 		</a>
 	</div>
 	<div class="alert alert-warning text-center" data-ng-if="employees.$resolved && !employees.length">

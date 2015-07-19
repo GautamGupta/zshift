@@ -11,5 +11,12 @@ module.exports = {
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
 	sessionSecret: 'MEAN',
-	sessionCollection: 'sessions'
+	sessionCollection: 'sessions',
+	integrations: {
+		braintree: {
+			public_key: process.env.BRAINTREE_PUBLIC,
+			private_key: process.env.BRAINTREE_PRIVATE,
+			merchant_id: process.env.BRAINTREE_MERCHANT,
+		}
+	}
 };
