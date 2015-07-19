@@ -136,7 +136,7 @@ exports.initiatePayment = function (req, res) {
 					} else {
 						var resp = {
 							redirect: response.preapprovalUrl
-						}
+						};
 						res.json(resp);
 					}
 				});

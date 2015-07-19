@@ -575,6 +575,11 @@ angular.module('shifts').controller('ShiftsController', ['$scope', '$stateParams
 			$scope.shifts = Shifts.query();
 		};
 
+		$scope.fill = function() {
+			$scope.startTime = '2015-07-20T09:00';
+			$scope.endTime = '2015-07-20T10:00';
+		};
+
 		$scope.findOne = function() {
 			$scope.shift = Shifts.get({
 				shiftId: $stateParams.shiftId
@@ -583,6 +588,7 @@ angular.module('shifts').controller('ShiftsController', ['$scope', '$stateParams
 
 		$scope.findEmployees = function() {
 			$scope.employees = Employees.query();
+			$scope.employee = $scope.employees[0];
 		};
 	}
 ]);
@@ -947,10 +953,8 @@ angular.module('users').controller('PaymentsController', ['$scope', '$timeout', 
     function ($scope, $timeout, $window, Authentication, $http) {
         // Change user profile picture
         $scope.initiatePayment = function () {
-            console.log('starting payment');
-            $http.post('/api/users/payment').success(function(response) {
-                // If successful show success message and clear form
-                $scope.success = true;
+            $http.post('/api/users/initiatePayment').success(function(response) {
+                $window.location.href = response.redirect;
             }).error(function(response) {
                 $scope.error = response.message;
             });
